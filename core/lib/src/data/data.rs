@@ -158,10 +158,7 @@ impl<'r> Data<'r> {
             match self.stream.read_buf(&mut self.buffer).await {
                 Ok(0) => { self.is_complete = true; break },
                 Ok(n) => len += n,
-                Err(e) => {
-                    error_!("Failed to read into peek buffer: {:?}.", e);
-                    break;
-                }
+                Err(_e) => { break; }
             }
         }
 
