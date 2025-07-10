@@ -60,7 +60,7 @@ multer = { version = "2", features = ["tokio-io"] }
 tokio-stream = { version = "0.1.6", features = ["signal", "time"] }
 state = "0.6"
 rocket_codegen = "0.5.1"
-rocket_http = "0.5.1"
+rocket_http = { version = "0.5.1", features = ["serde"] }
 
 [dependencies.tokio]
 version = "1.6.1"
