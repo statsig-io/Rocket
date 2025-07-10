@@ -36,10 +36,7 @@ impl<const N: usize, R: AsyncRead + Unpin> Peekable<N, R> {
                     break;
                 },
                 Ok(_) => { /* continue */ },
-                Err(e) => {
-                    error!("failed to read into peek buffer: {:?}.", e);
-                    break;
-                }
+                Err(_e) => { /* continue */ },
             }
         }
 
