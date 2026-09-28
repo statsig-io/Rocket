@@ -36,10 +36,10 @@ jobs:
           # Allow tests on nightly to fail.
           - platform: { toolchain: nightly }
             fallible: true
-          # Use the bigger 'C:/' from the "Switch Disk" step
+          # Use the checkout location provided by the runner.
           - platform: { name: Windows }
             working-directory:
-              "C:\\a\\${{ github.event.repository.name }}\\${{ github.event.repository.name }}"
+              ${{ github.workspace }}
 
     steps:
       - name: Checkout Sources
@@ -114,14 +114,6 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.test.name }}-${{ steps.toolchain.outputs.cachekey }}
-
-      # Don't run out of disk space on Windows. C: has much much space than D:.
-      - name: Switch Disk (Windows)
-        if: matrix.platform.name == 'Windows'
-        run: |
-          Get-PSDrive
-          cp D:\a C:\ -Recurse
-          Get-PSDrive
 
       - name: Run Tests
         continue-on-error: ${{ matrix.fallible || false }}
